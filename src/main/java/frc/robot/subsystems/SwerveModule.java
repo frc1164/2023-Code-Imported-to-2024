@@ -4,8 +4,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.platform.DeviceType;
+import com.ctre.phoenix6.hardware.CANcoder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -26,7 +25,7 @@ public class SwerveModule {
     private final PIDController turningPidController;
 
     /* private final AnalogInput absoluteEncoder; */ 
-    private final CANCoder absoluteEncoder;
+    private final CANcoder absoluteEncoder;
 
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
@@ -36,8 +35,8 @@ public class SwerveModule {
 
         this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
         this.absoluteEncoderReversed = absoluteEncoderReversed;
-        absoluteEncoder = new CANCoder(absoluteEncoderId);
-
+        absoluteEncoder = new CANcoder(absoluteEncoderId, "rio");
+                
         driveMotor = new CANSparkMax(driveMotorId, MotorType.kBrushless);
         driveMotor.setIdleMode(IdleMode.kBrake);
 
@@ -84,7 +83,7 @@ public class SwerveModule {
 
     public double getAbsoluteEncoderRad() {
         /* double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V(); */ 
-        double angle = absoluteEncoder.getAbsolutePosition() * Math.PI/180.0;
+        double angle = absoluteEncoder.getAbsolutePosition().getValue() * Math.PI/180.0;
         /* angle *= 2.0 * Math.PI; */
         angle -= absoluteEncoderOffsetRad;
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);

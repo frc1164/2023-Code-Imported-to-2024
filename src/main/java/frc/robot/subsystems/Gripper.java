@@ -15,9 +15,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.CANifier;
+import com.ctre.phoenix6.signals.ForwardLimitSourceValue;
 import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.CANifier.PinValues;
-import com.ctre.phoenix.sensors.*;
+import com.ctre.phoenix6.signals.ForwardLimitSourceValue;
 
 public class Gripper extends SubsystemBase {
   private static CANSparkMax rightDrive;
@@ -29,9 +30,6 @@ public class Gripper extends SubsystemBase {
   private static RelativeEncoder claspEncoder;
 
   public PIDController gripPID;
-
-
-
   private static CANifier m_canifier;
   private boolean m_openSwitch;
   private boolean m_closedSwitch;

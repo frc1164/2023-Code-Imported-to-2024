@@ -6,19 +6,16 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.jni.CANSparkMaxJNI;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
-import com.ctre.phoenix.CANifier;
-import com.ctre.phoenix.sensors.*;
+import com.ctre.phoenix6.hardware.CANcoder;
 
 public class ArmSubsystem extends SubsystemBase {
   private static CANSparkMax armShoulderMotor;
@@ -28,7 +25,7 @@ public class ArmSubsystem extends SubsystemBase {
   private static DigitalInput armShoulderUpperLimitSwitch;
   private static DigitalInput armShoulderLowerLimitSwitch;
   private static RelativeEncoder TelescopeEncoder;
-  private static CANCoder ShoulderEncoder;
+  private static CANcoder ShoulderEncoder;
   private PIDController thetaPID, radiusPID, setpointThetaPid, setpointRadiusPid;
   private static double tOld, tNew;
   private static double rOld, rNew, thetaOld, thetaNew, radiusOutput, thetaOutput, rError, thetaError, theta, r, setpointX, setpointY;
@@ -41,7 +38,7 @@ public class ArmSubsystem extends SubsystemBase {
   public ArmSubsystem() {
     armShoulderMotor = new CANSparkMax(ArmConstants.armShoulderMotor, MotorType.kBrushless);
     armShoulderMotor.setIdleMode(IdleMode.kBrake);
-    ShoulderEncoder = new CANCoder(ArmConstants.CANCoderid);
+    ShoulderEncoder = new CANcoder(ArmConstants.CANCoderid);
     armExtensionMotor = new CANSparkMax(ArmConstants.armExtensionMotor, MotorType.kBrushless);
     armExtensionMotor.setIdleMode(IdleMode.kBrake);
     TelescopeEncoder = armExtensionMotor.getEncoder();
@@ -124,7 +121,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public double getShoulderPosition() {
-    double angle = ShoulderEncoder.getAbsolutePosition() * Math.PI/180.0;
+    double angle = ShoulderEncoder.getAbsolutePosition().getValue() * Math.PI/180.0;
     angle -= ArmConstants.ShoulderEncoderOffset;
     if (angle > Math.PI) {
       angle -= Math.PI*2;
