@@ -10,23 +10,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Gripper;
 import frc.robot.Constants.GripperC;
+import edu.wpi.first.wpilibj.Timer;
+
 
 
 public class CubePickup extends Command {
   private final Gripper m_subsystem;
+  public static Timer m_timer;
+
 
   /** Creates a new CubePickup. */
   public CubePickup(Gripper subsystem) {
     m_subsystem = subsystem;
-  
+    m_timer = new Timer();
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_timer.start();
     m_subsystem.Intake(0);
-    m_subsystem.setgripPID(-16.5);
+    m_subsystem.setgripPID(0); //was -16.5
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,12 +48,17 @@ public class CubePickup extends Command {
   @Override
   public void end(boolean interrupted) {
     m_subsystem.Intake(0);
-  }
+    m_timer.stop();
+    m_timer.reset();
+    }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
    // return m_subsystem.gripPID.atSetpoint();
+   if(( m_subsystem.ToFDistance() <= 200) & (Gripper.claspEncoder.getPosition() > -70) || (m_timer.get() >= 5)){
+    return true;
+  } else {
     return false;
-  }
+  }  }
 }
