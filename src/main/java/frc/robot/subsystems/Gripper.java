@@ -19,6 +19,8 @@ import com.ctre.phoenix6.signals.ForwardLimitSourceValue;
 import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.CANifier.PinValues;
 import com.ctre.phoenix6.signals.ForwardLimitSourceValue;
+import com.playingwithfusion.TimeOfFlight;
+
 
 public class Gripper extends SubsystemBase {
   private static CANSparkMax rightDrive;
@@ -27,12 +29,14 @@ public class Gripper extends SubsystemBase {
 
   private static RelativeEncoder rightEncoder;
   private static RelativeEncoder leftEncoder;
-  private static RelativeEncoder claspEncoder;
+  public static RelativeEncoder claspEncoder;
 
   public PIDController gripPID;
   private static CANifier m_canifier;
   private boolean m_openSwitch;
   private boolean m_closedSwitch;
+  private static TimeOfFlight ToF;
+
 
 
   /** Creates a new Gripper. */
@@ -50,6 +54,8 @@ public class Gripper extends SubsystemBase {
     claspEncoder = clasp.getEncoder();
 
     gripPID = new PIDController(0.08, 0.008, 0);
+    ToF = new TimeOfFlight(GripperC.TimeOfFlightSensor);
+
   }
 
   public void resetEncoders() {
@@ -156,6 +162,9 @@ public static boolean getGripperOPENLimitSwitch() {
     setClasp(gripPID.calculate(gripPosition));
   }
 
+  public double ToFDistance() {
+    return ToF.getRange();
+  }
 
   @Override
   public void periodic() {
