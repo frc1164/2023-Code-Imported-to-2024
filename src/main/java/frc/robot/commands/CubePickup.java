@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class CubePickup extends Command {
   private final Gripper m_subsystem;
-  public static Timer m_timer;
+  private static Timer m_timer;
 
 
   /** Creates a new CubePickup. */

@@ -8,14 +8,17 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GripperC;
 import frc.robot.subsystems.Gripper;
+import edu.wpi.first.wpilibj.Timer;
 
 
 public class output extends Command {
+  private static Timer m_Timer;
   private final Gripper m_subsystem;
 
   /** Creates a new output. */
   public output(Gripper subsystem) {
     m_subsystem = subsystem;
+    m_Timer = new Timer();
     
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -23,6 +26,7 @@ public class output extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_Timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,12 +39,17 @@ public class output extends Command {
   @Override
   public void end(boolean interrupted) {
     m_subsystem.Intake(0);
+    m_Timer.stop();
+    m_Timer.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-
+    if (m_Timer.get() >= 5) {
+      return true;
+    }else{
+      return false;
+    }
   }
 }
