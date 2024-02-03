@@ -20,6 +20,7 @@ public class CubeInit extends CommandBase {
     m_subsystem = subsystem;
     m_timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -50,7 +51,7 @@ public class CubeInit extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(( m_subsystem.ToFDistance() <= 200) & (Gripper.claspEncoder.getPosition() > -70) || (m_timer.get() >= 3)){
+    if(( m_subsystem.ToFDistance() <= 200) && (Gripper.claspEncoder.getPosition() > -70) || (m_timer.get() >= 3)){
       return true;
     } else {
       return false;

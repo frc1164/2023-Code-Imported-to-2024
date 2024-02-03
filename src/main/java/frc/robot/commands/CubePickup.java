@@ -25,6 +25,7 @@ public class CubePickup extends Command {
     m_timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -56,7 +57,7 @@ public class CubePickup extends Command {
   @Override
   public boolean isFinished() {
    // return m_subsystem.gripPID.atSetpoint();
-   if(( m_subsystem.ToFDistance() <= 200) & (Gripper.claspEncoder.getPosition() > -70) || (m_timer.get() >= 5)){
+   if(( m_subsystem.ToFDistance() <= 200) && (Gripper.claspEncoder.getPosition() > -70) || (m_timer.get() >= 5)){
     return true;
   } else {
     return false;

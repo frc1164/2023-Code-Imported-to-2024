@@ -30,6 +30,7 @@ import frc.robot.commands.BalanceCmd;
 import frc.robot.commands.Clasp;
 import frc.robot.commands.ConePickup;
 import frc.robot.commands.CubePickup;
+import frc.robot.commands.CubeInit;
 import frc.robot.commands.ScoreGridTop;
 import frc.robot.commands.intake;
 import frc.robot.commands.output;
@@ -44,6 +45,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 //import com.pathplanner.lib.PathPlanner;
 //import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.util.PIDConstants;
@@ -87,59 +89,19 @@ public class RobotContainer {
                                 armSubsystem,
                                 armController));
 
-                // Autonomous stuff
-                // Read in Autonomous trajectories as multiple paths
-                /*
-                 * List<PathPlannerTrajectory> trajectory5 =
-                 * PathPlanner.loadPathGroup("Middle Long", 2, 1);
-                 * List<PathPlannerTrajectory> trajectory6 =
-                 * PathPlanner.loadPathGroup("Middle Short", 2, 1);
-                 * List<PathPlannerTrajectory> trajectory7 =
-                 * PathPlanner.loadPathGroup("Right Path", 2, 1);
-                 * List<PathPlannerTrajectory> trajectory8 =
-                 * PathPlanner.loadPathGroup("Left Path", 2, 1);
-                 */
-
-                // Populate the Event Map (PathPlanner labels paired with commands)
-                eventMap.put("balance", new BalanceCmd(swerveSubsystem));
-
-                // Construct the PathPlanner AutoBuilder (only needs to happen once)
-                /*
-                 * SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-                 * swerveSubsystem::getPose, // Pose2d supplier
-                 * swerveSubsystem::resetOdometry, // Pose2d consumer, used to reset odometry at
-                 * the beginning of auto
-                 * DriveConstants.kDriveKinematics, // SwerveDriveKinematics
-                 * new PIDConstants(AutoConstants.kPXController, 0.0, 0.0), // PID constants to
-                 * correct for translation error (used to create the X and Y PID controllers)
-                 * new PIDConstants(AutoConstants.kPThetaController, 0.0, 0.0), // PID constants
-                 * to correct for rotation error (used to create the rotation controller)
-                 * swerveSubsystem::setModuleStates, // Module states consumer used to output to
-                 * the drive subsystem
-                 * eventMap, true,// Should the path be automatically mirrored depending on
-                 * alliance color. Optional, defaults to true
-                 * swerveSubsystem // The drive subsystem. Used to properly set the requirements
-                 * of path following commands
-                 * );
-                 */
-
-                // Populate the Sendable Chooser with calls to autoBuilder with specific
-                // tractories
-                /*
-                 * m_chooser.addOption("Middle Long", autoBuilder.fullAuto(trajectory5));
-                 * m_chooser.addOption("Middle Short", autoBuilder.fullAuto(trajectory6));
-                 * m_chooser.addOption("Right Path", autoBuilder.fullAuto(trajectory7));
-                 * m_chooser.addOption("Left Path", autoBuilder.fullAuto(trajectory8));
-                 * m_chooser.addOption("None", null);
-                 * Shuffleboard.getTab("Auto").add(m_chooser);
-                 */
                 // Build an auto chooser. This will use Commands.none() as the default option.
                 autoChooser = AutoBuilder.buildAutoChooser();
 
+                //Register named commands
+                NamedCommands.registerCommand("CubeInit", new CubeInit(m_gripper));
+                NamedCommands.registerCommand("CubePickup", new CubePickup(m_gripper));
+                NamedCommands.registerCommand("CubeOutput", new output(m_gripper));
+              
                 // Another option that allows you to specify the default auto by its name
                 // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
                 SmartDashboard.putData("Auto Chooser", autoChooser);
+
                 configureButtonBindings();
         }
 
