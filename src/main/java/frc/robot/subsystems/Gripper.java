@@ -173,6 +173,7 @@ public static boolean getGripperOPENLimitSwitch() {
     SmartDashboard.putBoolean("CLSD Limit Switch", getGripperCLSDLimitSwitch());
     SmartDashboard.putBoolean("OPEN Limit Switch", getGripperOPENLimitSwitch());
     setgripEncoder();
+    SmartDashboard.putNumber("tof", ToFDistance());
     //gripper range is (85.0272 units to other end as is -need to check polarity-)
   }
 }

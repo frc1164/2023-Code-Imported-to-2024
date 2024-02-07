@@ -29,6 +29,7 @@ import frc.robot.commands.ArmCmd;
 import frc.robot.commands.BalanceCmd;
 import frc.robot.commands.Clasp;
 import frc.robot.commands.ConePickup;
+import frc.robot.commands.CubeInit;
 import frc.robot.commands.CubePickup;
 import frc.robot.commands.CubeInit;
 import frc.robot.commands.ScoreGridTop;
@@ -124,6 +125,7 @@ public class RobotContainer {
                 rBumper.whileTrue(new ConePickup(m_gripper));
                 xButton.whileTrue(new intake(m_gripper));
                 aButton.whileTrue(new output(m_gripper));
+                yButton.onTrue(new CubeInit(m_gripper));
                 lDPad.onTrue(new ScoreGridTop(armSubsystem));
 
                 /*
