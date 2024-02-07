@@ -32,9 +32,10 @@ public class CubeInit extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Should Pos",ArmSubsystem.getShoulderPosition() );
+    /*SmartDashboard.putNumber("Should Pos",ArmSubsystem.getShoulderPosition() );
     if (ArmSubsystem.getShoulderPosition() >= (-.9))
-      m_subsystem.runGripPID(m_subsystem.gripPosition());
+      m_subsystem.runGripPID(m_subsystem.gripPosition());*/
+    m_subsystem.setClasp(.25);
       
   }
    // SmartDashboard.putBoolean("Y_BUTTON", m_controller.getYButton());
@@ -50,7 +51,7 @@ public class CubeInit extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(( m_subsystem.ToFDistance() <= 200) & (Gripper.claspEncoder.getPosition() > -70) || (m_timer.get() >= 3)){
+    if(m_timer.get() >= 3){
       return true;
     } else {
       return false;
