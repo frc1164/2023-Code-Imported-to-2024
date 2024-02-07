@@ -57,7 +57,7 @@ public class CubePickup extends Command {
   @Override
   public boolean isFinished() {
    // return m_subsystem.gripPID.atSetpoint();
-   if(( m_subsystem.ToFDistance() <= 200) && (Gripper.claspEncoder.getPosition() > -70) || (m_timer.get() >= 5)){
+  if (( m_subsystem.ToFDistance() <= 200) && (Gripper.claspEncoder.getPosition() > -70) || (m_timer.get() >= 5)){
     return true;
   } else {
     return false;

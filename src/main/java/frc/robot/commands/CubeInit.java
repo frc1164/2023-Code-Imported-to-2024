@@ -7,11 +7,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Gripper;
 
-public class CubeInit extends CommandBase {
+public class CubeInit extends Command {
   private final Gripper m_subsystem;
   public static Timer m_timer;
 
@@ -26,6 +26,7 @@ public class CubeInit extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putBoolean("InitRunning", true);
     m_timer.start();
     m_subsystem.setgripPID(0); //was -16.5
   }
@@ -36,8 +37,7 @@ public class CubeInit extends CommandBase {
     /*SmartDashboard.putNumber("Should Pos",ArmSubsystem.getShoulderPosition() );
     if (ArmSubsystem.getShoulderPosition() >= (-.9))
       m_subsystem.runGripPID(m_subsystem.gripPosition());*/
-    m_subsystem.setClasp(.25);
-      
+    m_subsystem.setClasp(.25);      
   }
    // SmartDashboard.putBoolean("Y_BUTTON", m_controller.getYButton());
   
@@ -47,7 +47,8 @@ public class CubeInit extends CommandBase {
   public void end(boolean interrupted) {
     m_timer.stop();
     m_timer.reset();
-  }
+    SmartDashboard.putBoolean("InitRunning", false);
+    }
 
   // Returns true when the command should end.
   @Override

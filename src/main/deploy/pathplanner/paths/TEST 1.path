@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 4.511078009317217,
+        "x": 3.3868377009221913,
         "y": 7.0
       },
       "prevControl": {
-        "x": 4.431821442207111,
+        "x": 3.3075811338120857,
         "y": 7.0
       },
       "nextControl": null,
@@ -35,7 +35,7 @@
       "name": "Initialize Gripper",
       "waypointRelativePos": 0.05,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
