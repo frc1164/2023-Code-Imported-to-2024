@@ -90,14 +90,14 @@ public class RobotContainer {
                                 armSubsystem,
                                 armController));
 
-                // Build an auto chooser. This will use Commands.none() as the default option.
-                autoChooser = AutoBuilder.buildAutoChooser();
-
                 //Register named commands
                 NamedCommands.registerCommand("CubeInit", new CubeInit(m_gripper));
                 NamedCommands.registerCommand("CubePickup", new CubePickup(m_gripper));
                 NamedCommands.registerCommand("CubeOutput", new output(m_gripper));
-              
+                
+                // Build an auto chooser. This will use Commands.none() as the default option.
+                autoChooser = AutoBuilder.buildAutoChooser();
+                
                 // Another option that allows you to specify the default auto by its name
                 // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
